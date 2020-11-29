@@ -59,10 +59,31 @@ namespace UITest
                 //Assert.Equal(homeTitle, driver.Title);
                 //Assert.Equal(homeUrl, driver.Url);
 
-                driver.Navigate().GoToUrl("https://passport-photo.online/en-gb/uk-linkedin-photo");
+                driver.Navigate().GoToUrl("https://passport-photo.online/pl/zdjecie-do-mlegitymacji");
                 var addFile = driver.FindElement(By.Id("upload-form-file-input"));
                 addFile.SendKeys(@"C:\Users\robby\Desktop\Game of Thrones\228408_600.jpg");
 
+
+                //TODO: assert that page was reloaded
+            }
+        }
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void ReloadHomePageOnForward()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                driver.Navigate().GoToUrl(AboutUrl);
+                DemoHelper.Pause();
+                driver.Navigate().GoToUrl(homeUrl);
+                DemoHelper.Pause();
+                driver.Navigate().Back();
+                DemoHelper.Pause();
+                driver.Navigate().Forward();
+                DemoHelper.Pause();
+
+                Assert.Equal(homeTitle, driver.Title);
+                Assert.Equal(homeUrl, driver.Url);
 
                 //TODO: assert that page was reloaded
             }
